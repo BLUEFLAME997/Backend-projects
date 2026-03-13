@@ -14,3 +14,6 @@ const postSchema=new mongoose.Schema({
     required:[true,"User id required for post creation"]
   }
 })
+
+const postModel=mongoose.model("posts",postSchema);
+module.exports=postModel;
