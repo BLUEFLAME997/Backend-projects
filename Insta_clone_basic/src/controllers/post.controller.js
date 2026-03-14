@@ -4,6 +4,7 @@ const ImageKit = require('@imagekit/nodejs')
 const { toFile } = require('@imagekit/nodejs')
 const jwt = require('jsonwebtoken');
 const { post } = require('../routes/post.route');
+const authMiddleware=require('../middleware/auth.middleware');
 
 const imageKit = new ImageKit({
   privateKey: process.env.IMAGEKIT_PRIVATE_KEY
