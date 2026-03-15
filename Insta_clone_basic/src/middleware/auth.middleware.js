@@ -17,6 +17,7 @@ async function indentifyUser(req, res, next) {
   }
 
   req.user=decoded;
+  next();
 }
 
 module.exports=indentifyUser;
