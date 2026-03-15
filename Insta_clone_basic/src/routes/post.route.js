@@ -10,5 +10,6 @@ const indentifyUser = require('../middleware/auth.middleware');
 postRoute.post('/', upload.single('image'), indentifyUser, postController.createPostController);
 postRoute.get('/', identifyUser, postController.getPostController);
 postRoute.get('/details/:postId', identifyUser, postController.getPostDetailController);
+postRoute.post('/like/:postId',indentifyUser,postController.likePostController)
 
 module.exports = postRoute;
