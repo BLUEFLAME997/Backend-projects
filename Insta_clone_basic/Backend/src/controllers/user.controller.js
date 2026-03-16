@@ -93,7 +93,58 @@ async function unFollowUserController(req, res) {
   })
 }
 
+async function followerStatusController(req,res){
+  const followingUserName=req.user.userName;
+  const followerUserName=req.params.userName;
+
+  const isFollowingUserNameExist=await userModel.findOne({
+    userName:followingUserName
+  })
+  if(!isFollowingUserNameExist){
+    return res.status(404).json({
+      Message:`User ${followingUserName} does not exist`
+    })
+  }
+
+  if(followingUserName===followerUserName){
+    return res.status(400).json({
+      Message:"You cannot update status of yourself"
+    })
+  }
+
+  const isFollowerUserNameExist=await userModel.findOne({
+    userName:followerUserName
+  })
+  if(!isFollowerUserNameExist){
+    return res.status(404).json({
+      Message:`User ${followerUserName} does not exist`
+    })
+  }
+
+  const isFollowExist=await followModel.findOne({
+    follower:followerUserName,
+    following:followingUserName
+  })
+  if(!isFollowExist){
+    return res.status(400).json({
+      Message:'User does not follow you'
+    })
+  }
+
+  const {status}=req.body;
+  await followModel.updateOne({
+    follower:followerUserName,
+    following:followingUserName
+  },
+  {$set:{status:status}})
+
+  res.status(200).json({
+    Message:"Status updated successfully"
+  })
+}
+
 module.exports = {
   followUserController,
-  unFollowUserController
+  unFollowUserController,
+  followerStatusController
 }
