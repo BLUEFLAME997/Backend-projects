@@ -1,0 +1,49 @@
+main{
+  width: 100%;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-container{
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  min-width: 370px;
+  gap: 1rem;
+  h1{
+    color:whitesmoke;
+  }
+  p{
+    color: whitesmoke;
+    display: flex;
+    gap: 8px;
+    a{
+      color: #bd0c23;
+      text-decoration: none;
+    }
+  }
+  form{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap:  0.8rem;
+    input,button{
+      width: 100%;
+      padding: 1rem 1.5rem;
+      border:none;
+      border-radius: 1rem;
+      outline: none;
+      font-size: 1.1rem;
+    }
+    button{
+      background-color: #bd0c23;
+      color: whitesmoke;
+      cursor: pointer;
+    }
+  }
+}
