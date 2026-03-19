@@ -11,7 +11,9 @@ export const AuthProvider=({children})=>{
     setLoading(true);
     try{
       const response=await login(email,password);
-      setUser(response.data.user);
+      setUser(response.data.isUserexists);
+      console.log(response.data.isUserexists)
+      console.log(user)
       return response
     }catch(err){
       throw err
