@@ -12,7 +12,7 @@ async function createPostController(req, res) {
   const { caption } = req.body;
 
   const file = await imageKit.files.upload({
-    file: await toFile(Buffer.from(req.file.buffer), 'file'),
+    file: await toFile(req.file.buffer, 'file'),
     fileName: 'Test',
     folder: 'insta-all-posts'
   })
@@ -25,7 +25,8 @@ async function createPostController(req, res) {
 
   res.status(200).json({
     message: "ok",
-    file
+    file,
+    post
   })
 }
 
@@ -100,9 +101,18 @@ async function likePostController(req, res) {
   })
 }
 
+async function getFeedController(req, res) {
+  const posts=await postModel.find().populate('user');
+  res.status(200).json({
+    Message:"Posts fetched successfully",
+    posts
+  })
+}
+
 module.exports = {
   createPostController,
   getPostController,
   getPostDetailController,
-  likePostController
+  likePostController,
+  getFeedController
 }
