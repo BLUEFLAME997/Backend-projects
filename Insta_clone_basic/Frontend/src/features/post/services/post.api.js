@@ -4,12 +4,10 @@ const api=axios.create({
   withCredentials:true
 })
 
-export async function getPosts(user){
+export async function getPosts(){
   try{
-    const response=await api.get('/',{
-      user
-    })
-    return response;
+    const response=await api.get('/feed')
+    return response.data;
   }catch(err){
     throw err
   }

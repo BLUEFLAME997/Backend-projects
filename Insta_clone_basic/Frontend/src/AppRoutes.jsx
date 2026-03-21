@@ -14,6 +14,6 @@ export const route=createBrowserRouter([
   },
   {
     path:'/',
-    element:<Feed/>
+    element:(<Feed/>)
   }
 ])
