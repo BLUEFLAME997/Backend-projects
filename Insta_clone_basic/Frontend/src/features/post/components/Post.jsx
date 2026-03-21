@@ -14,7 +14,7 @@ const Post = ({data}) => {
         </div>
         <div className="icons-section">
           <div className="left-section">
-            <button><i className="ri-heart-line"></i></button>
+            <button><i className={`ri-heart-line ${data.isLiked?"like":""}`} ></i></button>
             <button><i className="ri-chat-1-line"></i></button>
             <button><i className="ri-share-forward-line"></i></button>
           </div>

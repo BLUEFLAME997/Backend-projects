@@ -7,7 +7,7 @@
   padding: 1rem;
   flex-direction: column;
   gap: 1rem;
-  
+
   .h1{
     color: white;
   }
@@ -74,6 +74,10 @@
       .left-section{
         display: flex;
         gap: 15px;
+
+        .like{
+          color: red;
+        }
       }
     }
     .bottom{
