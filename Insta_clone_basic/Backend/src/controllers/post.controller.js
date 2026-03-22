@@ -114,7 +114,7 @@ async function getFeedController(req, res) {
       user: user.userName
 
     })
-    post.isLiked=Boolean(isLiked);
+    post.isLiked = Boolean(isLiked);
     return post
   }))
 

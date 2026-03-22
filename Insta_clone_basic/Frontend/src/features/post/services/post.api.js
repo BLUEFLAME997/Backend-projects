@@ -12,3 +12,11 @@ export async function getPosts(){
     throw err
   }
 }
+
+export async function createPost(imageFile,caption){
+  const formData = new FormData();
+  formData.append('image',imageFile);
+  formData.append('caption',caption);
+  const response=await api.post('/',formData);
+  return response
+}
