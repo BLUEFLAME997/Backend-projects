@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const userModel=require('../model/user.model');
@@ -46,6 +47,44 @@ async function userRegisterController(req, res) {
   })
 }
 
+async function userLoginController(req,res){
+  const {username,password}=req.body;
+  const isUserExist=await userModel.findOne({
+    $or:[
+      {username:username},
+      {email:username}
+    ]
+  })
+
+  if(!isUserExist){
+    return res.status(404).json({
+      Message:"User not found"
+    })
+  }
+
+  const isPasswordCorrect=await bcrypt.compare(password,isUserExist.password);
+
+  if(!isPasswordCorrect){
+    return res.status(401).json({
+      Message:"Invalid password"
+    })
+  }
+
+  const token=jwt.sign({
+    id:isUserExist._id,
+    username:isUserExist.username,
+    email:isUserExist.email
+  },process.env.JWT_SECRET)
+
+  res.cookie("JWT_TOKEN",token);
+  res.status(200).json({
+    Message:"Logged in successfully",
+  })
+
+}
+
+
 module.exports={
-  userRegisterController
+  userRegisterController,
+  userLoginController
 }
