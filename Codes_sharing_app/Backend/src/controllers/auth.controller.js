@@ -79,6 +79,7 @@ async function userLoginController(req,res){
   res.cookie("JWT_TOKEN",token);
   res.status(200).json({
     Message:"Logged in successfully",
+    isUserExist
   })
 
 }
