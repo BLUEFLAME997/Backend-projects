@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react'
-import useAuth from '../hooks/useAuth'
+import useAuth from '../../auth/hooks/useAuth'
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Navbar from '../components/Navbar'
+import '../style/dashboard.scss'
+import Controls from '../components/Controls'
 
 const Dashboard = () => {
   const {user}=useAuth();
@@ -25,11 +28,10 @@ const Dashboard = () => {
   }
 
   return (
-    <div>
-      <button
-      onClick={clickhandle}>button</button>
-      <h1>this is dashboard</h1>
-    </div>
+    <section className='dashboard-page'>
+      <Navbar/>
+      <Controls/>
+    </section>
   )
 }
 
