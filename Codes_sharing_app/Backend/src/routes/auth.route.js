@@ -14,6 +14,10 @@ authRoute.post('/register',authController.userRegisterController);
 */
 authRoute.post('/login',authController.userLoginController);
 
-
+/* 
+@route: GET /api/auth/get-me
+@description: to verify the user token 
+*/
+authRoute.get('/get-me',authController.userVerifyController);
 
 module.exports=authRoute
