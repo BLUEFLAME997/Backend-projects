@@ -22,15 +22,28 @@ export async function userLoginApi(username, password) {
 export async function userRegisterApi(username, email, password) {
   try {
 
-    const response = await API.post('/register',{
+    const response = await API.post('/register', {
       username,
       email,
       password
     })
 
     return response.data;
-    
+
   } catch (err) {
     throw err
   }
 }
+
+export async function verifyUserApi() {
+  try {
+
+    const response = await API.get('/get-me');
+    return response
+
+  } catch (err) {
+    throw err
+  }
+
+}
+

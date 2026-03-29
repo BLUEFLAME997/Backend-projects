@@ -11,18 +11,18 @@ const Dashboard = () => {
     console.log(user)
   }
 
-  if(user===undefined){
-      return (
-        <main><h1>Loading...</h1></main>
-      )
-    }
-
   useEffect(()=>{
     if(user===null){
       console.log(user)
       navigate('/login')
     }
   },[user])
+
+  if(user===undefined){
+    return (
+      <main><h1>Loading...</h1></main>
+    )
+  }
 
   return (
     <div>
