@@ -1,0 +1,50 @@
+.code-editor{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  gap: 10px;
+  height: 92.5vh;
+  .code-section{
+    width: 50%;
+  }
+  .code-output-section{
+    height: 100%;
+    width: 50%;
+    .top-section{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem;
+      overflow: auto;
+      p{
+        font-size: 1.5rem;
+      }
+      button{
+        padding: 0.5rem;
+        border: 1px solid rgb(84, 84, 84);
+        border-radius: 5px;
+        color: white;
+        background-color: rgb(16, 92, 255);
+      }
+    }
+    .code-output{
+      height: 90%;
+    }
+  }
+}
+
+@media (max-width:750px){
+  .code-editor{
+    margin-top: 20px;
+    flex-direction: column;
+    .code-section{
+      width: 100%;
+    }
+    .code-output-section{
+      width: 100%;
+    }
+  }
+}

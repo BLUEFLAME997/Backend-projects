@@ -4,13 +4,16 @@ import { RouterProvider } from 'react-router-dom'
 import './index.scss'
 import { AuthProvider } from '../../../Insta_clone_basic/Frontend/src/features/auth/auth.context'
 import { AuthContextProvider } from './features/auth/auth.context'
+import SnippetContextProvider from './features/snippets/Snippets.context'
 
 const App = () => {
   return (
     <>
-    <AuthContextProvider>
-      <RouterProvider router={Approute}/>
-    </AuthContextProvider>
+      <AuthContextProvider>
+        <SnippetContextProvider>
+          <RouterProvider router={Approute} />
+        </SnippetContextProvider>
+      </AuthContextProvider>
     </>
   )
 }

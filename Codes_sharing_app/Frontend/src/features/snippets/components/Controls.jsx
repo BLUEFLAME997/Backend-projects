@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { SnippetsContext } from '../Snippets.context';
 
 const Controls = () => {
+  const context = useContext(SnippetsContext);
+  const {languageValue,setLanguageValue,theme,setTheme}=context;
   const [openFirst,setOpenFirst]=useState(false);
   const [openSecond,setOpenSecond]=useState(false);
-  const [languageValue,setLanguageValue]=useState('html');
-  const [theme,setTheme]=useState('light');
 
   return (
     <div className="controls">
@@ -13,14 +14,9 @@ const Controls = () => {
           <button className='language-section-opener'
           onClick={()=>{
             setOpenFirst(!openFirst);
-            console.log(openFirst)
+            setOpenSecond(false)
           }}>{languageValue}</button>
           <div className={`languages ${openFirst?"open":"close"}`}>
-            <button
-            onClick={()=>{
-              setLanguageValue('html')
-              setOpenFirst(!openFirst)
-            }}>Html</button>
             <button
             onClick={()=>{
               setLanguageValue('javascript')
@@ -46,12 +42,33 @@ const Controls = () => {
               setLanguageValue('c++')
               setOpenFirst(!openFirst)
             }}>C++</button>
+            <button
+            onClick={()=>{
+              setLanguageValue('typescript')
+              setOpenFirst(!openFirst);
+            }}>Typescript</button>
+            <button
+            onClick={()=>{
+              setLanguageValue('go');
+              setOpenFirst(!openFirst);
+            }}>Go</button>
+            <button
+            onClick={()=>{
+              setLanguageValue('rust');
+              setOpenFirst(!openFirst)
+            }}>Rust</button>
+            <button
+            onClick={()=>{
+              setLanguageValue('php');
+              setOpenFirst(!openFirst);
+            }}>Php</button>
           </div>
         </div>
         <div className="select-theme">
           <button className='language-section-opener'
           onClick={()=>{
             setOpenSecond(!openSecond);
+            setOpenFirst(false)
           }}>{theme}</button>
           <div className={`themes ${openSecond?"open":"close"}`}>
             <button

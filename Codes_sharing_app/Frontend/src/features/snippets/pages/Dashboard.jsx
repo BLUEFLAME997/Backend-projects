@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import '../style/dashboard.scss'
 import Controls from '../components/Controls'
+import CodeEditor from '../components/CodeEditor'
 
 const Dashboard = () => {
   const {user}=useAuth();
@@ -31,6 +32,7 @@ const Dashboard = () => {
     <section className='dashboard-page'>
       <Navbar/>
       <Controls/>
+      <CodeEditor/>
     </section>
   )
 }
