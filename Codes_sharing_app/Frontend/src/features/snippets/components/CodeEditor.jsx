@@ -4,18 +4,28 @@ import '../style/codeEditor.scss'
 import { SnippetsContext } from '../Snippets.context';
 import { useContext } from 'react';
 import { CODE_SNIPPETS } from '../contants/languages';
+import { useSnippets } from '../hooks/useSnippet';
 
 const CodeEditor = () => {
   const context = useContext(SnippetsContext);
-  const {languageValue,value,setValue}=context;
+  const {languageValue,value,setValue,output,setOutput,editorRef}=context;
+  const {handleCodeOuput}=useSnippets();
 
   const onMount=(editor)=>{
-    // editorRef.current=editor;
     editor.focus();
   }
   useEffect(()=>{
     setValue(CODE_SNIPPETS[languageValue])
   },[languageValue])
+
+  const runCode=async()=>{
+    const response = await handleCodeOuput();
+    console.log(response);
+    const finalOutput =
+      response.stdout || response.stderr || response.compile_output || "No Output";
+    setOutput(finalOutput);
+    console.log(output)
+  }
 
   return (
     <section className="code-editor">
@@ -25,16 +35,24 @@ const CodeEditor = () => {
         language={languageValue} 
         defaultValue={CODE_SNIPPETS[languageValue]}
         value={value}
+        onChange={(value)=>{
+          setValue(value)
+        }}
         onMount={onMount}
         />
       </section>
       <section className="code-output-section">
         <div className="top-section">
           <p>Output: </p>
-          <button className='code-run-btn'>Run</button>
+          <button className='code-run-btn'
+          onClick={()=>{
+            runCode();
+          }}>Run</button>
         </div>
         <div className="code-output">
-          test
+          <pre>
+            {output}
+          </pre>
         </div>
       </section>
     </section>

@@ -86,7 +86,7 @@ const Controls = () => {
       </div>
       <div className="buttons">
         <button className='share-btn'>Share</button>
-        <button className='cpy-btn'>Copy button</button>
+        <button className='cpy-btn'>Copy</button>
       </div>
     </div>
   )

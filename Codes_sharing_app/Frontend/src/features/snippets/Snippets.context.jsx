@@ -8,9 +8,10 @@ const SnippetContextProvider=({children})=>{
   const [theme,setTheme]=useState('light');
   const editorRef=useRef();
   const [value,setValue]=useState(CODE_SNIPPETS[languageValue]);
+  const [output,setOutput]=useState('');
 
   return (
-    <SnippetsContext.Provider value={{languageValue,theme,setLanguageValue,setTheme,value,setValue}}>
+    <SnippetsContext.Provider value={{languageValue,theme,setLanguageValue,setTheme,value,setValue,output,setOutput}}>
       {children}
     </SnippetsContext.Provider>
   )
