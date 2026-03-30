@@ -9,9 +9,10 @@ const SnippetContextProvider=({children})=>{
   const editorRef=useRef();
   const [value,setValue]=useState(CODE_SNIPPETS[languageValue]);
   const [output,setOutput]=useState('');
+  const [savePopUp,setSavePopUp]=useState(false);
 
   return (
-    <SnippetsContext.Provider value={{languageValue,theme,setLanguageValue,setTheme,value,setValue,output,setOutput}}>
+    <SnippetsContext.Provider value={{languageValue,theme,setLanguageValue,setTheme,value,setValue,output,setOutput,savePopUp,setSavePopUp}}>
       {children}
     </SnippetsContext.Provider>
   )

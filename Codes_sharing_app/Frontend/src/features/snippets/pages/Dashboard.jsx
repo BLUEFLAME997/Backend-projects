@@ -6,33 +6,43 @@ import Navbar from '../components/Navbar'
 import '../style/dashboard.scss'
 import Controls from '../components/Controls'
 import CodeEditor from '../components/CodeEditor'
+import SaveFilePopUp from '../components/SaveFilePopUp'
+import { SnippetsContext } from '../Snippets.context'
 
 const Dashboard = () => {
-  const {user}=useAuth();
-  const navigate=useNavigate();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const context=useContext(SnippetsContext);
+  const {savePopUp,setSavePopUp}=context;
 
-  const clickhandle=()=>{
-    console.log(user)
-  }
-
-  useEffect(()=>{
-    if(user===null){
+  useEffect(() => {
+    if (user === null) {
       console.log(user)
       navigate('/login')
     }
-  },[user])
+  }, [user])
 
-  if(user===undefined){
+  if (user === undefined) {
     return (
       <main><h1>Loading...</h1></main>
     )
   }
 
+  const handleSaveFile=()=>{
+    setSavePopUp(true);
+    console.log(savePopUp);
+  }
+
   return (
     <section className='dashboard-page'>
-      <Navbar/>
-      <Controls/>
-      <CodeEditor/>
+      <Navbar />
+      <Controls />
+      <CodeEditor />
+      <div className="save-button-section">
+        <button className='save-button'
+        onClick={handleSaveFile}>Save File</button>
+      </div>
+      <SaveFilePopUp/>
     </section>
   )
 }
