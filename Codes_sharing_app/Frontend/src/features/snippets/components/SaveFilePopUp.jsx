@@ -13,10 +13,10 @@ const SaveFilePopUp = () => {
   }
 
   return (
-    <div className={`main-container ${savePopUp?'open':'close'}`}>
-      <div className={`container ${savePopUp?'opens':'close'}`}>
+    <div className={`main-container`}>
+      <div className={`container ${savePopUp?'open':'close'}`}>
       </div>
-      <div className='save-file-pop-up'>
+      <div className={`save-file-pop-up ${savePopUp?'open':'close'}`}>
         <div className="top-section">
           <div className="cross"
           onClick={handleSaveFile}>
