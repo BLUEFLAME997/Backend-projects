@@ -17,6 +17,7 @@ const fileSchema=new mongoose.Schema({
   },
   userId:{
     type:mongoose.Schema.Types.ObjectId,
+    ref:'users',
     required:[true,"User id required"]
   },
   codeSnippet:{
@@ -27,6 +28,8 @@ const fileSchema=new mongoose.Schema({
     type:Boolean,
     default:true
   }
+},{
+  timestamps:true
 })
 
 const fileModel=mongoose.model('CodeFiles',fileSchema);

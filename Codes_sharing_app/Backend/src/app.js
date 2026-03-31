@@ -3,7 +3,12 @@ const app = express();
 const authRoute = require('./routes/auth.route');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const codeFilesRoute=require('./routes/codeFiles.route')
 
+
+/* 
+Middlewares: 
+*/
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
@@ -11,6 +16,10 @@ app.use(cors({
   origin: 'http://localhost:5173'
 }))
 
+/* 
+Application routes: 
+*/
 app.use('/api/auth', authRoute);
+app.use('/api/snippet',codeFilesRoute);
 
 module.exports = app;
