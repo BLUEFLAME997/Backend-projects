@@ -1,9 +1,10 @@
-const files=require('../model/files.model');
+const { default: mongoose } = require('mongoose');
+const fileModel=require('../model/files.model');
 
 async function saveFileController(req,res){
   const {snippetId}=req.params;
   const {fileName,language,userId,codeSnippet,isPublic}=req.body;
-  const isCodeSnippetAlreadyExist = await files.findOne({
+  const isCodeSnippetAlreadyExist = await fileModel.findOne({
     snippetId
   })
 
@@ -13,26 +14,17 @@ async function saveFileController(req,res){
     })
   }
 
-  const isFileNameAlreadyExist=await files.findOne({
+  const isFileNameAlreadyExist=await fileModel.findOne({
     fileName
   })
 
   if(isFileNameAlreadyExist){
-    const fileUpdate=await files.updateOne({
-      snippetId
-    },{
-      $set:{
-        codeSnippet:codeSnippet
-      }
-    })
-
-    return res.status(200).json({
-      Message:"Code snippet updated successfully",
-      fileUpdate
+    return res.status(409).json({
+      Message:"Filename already exist"
     })
   }
 
-  const codeFile = await files.create({
+  const codeFile = await fileModel.create({
     snippetId,
     fileName,
     language,
@@ -47,6 +39,49 @@ async function saveFileController(req,res){
   })
 }
 
+async function updateFileController(req,res){
+  const user=req.user;
+  const id=user.id;
+  const {snippetId}=req.params;
+  const {fileName,codeSnippet,language,isPublic}=req.body;
+
+  const isSnippetExist = await fileModel.findOne({
+    snippetId
+  })
+  if(!isSnippetExist){
+    return res.status(404).json({
+      Message:"Snippet not found"
+    })
+  }
+
+  const isUserValidForUpdate=await fileModel.findOne({
+    snippetId,
+    userId:user.id
+  })
+
+  console.log(snippetId,id, typeof id);
+  console.log(isUserValidForUpdate)
+
+  if(!isUserValidForUpdate){
+    return res.status(400).json({
+      Message:"User not valid to change this file"
+    })
+  }
+
+  const updated = await fileModel.updateOne(
+    {snippetId:snippetId},
+    {$set:{
+      codeSnippet:codeSnippet
+    }}
+  )
+
+  res.status(200).json({
+    Message:"Update successfull",
+    updated
+  })
+}
+
 module.exports={
-  saveFileController
+  saveFileController,
+  updateFileController
 }
