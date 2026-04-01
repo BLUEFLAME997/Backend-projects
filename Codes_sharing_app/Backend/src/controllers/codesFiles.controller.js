@@ -54,12 +54,14 @@ async function updateFileController(req,res){
     })
   }
 
+  const objectId=new mongoose.Types.ObjectId(id);
+
   const isUserValidForUpdate=await fileModel.findOne({
     snippetId,
-    userId:user.id
+    userId:objectId
   })
 
-  console.log(snippetId,id, typeof id);
+  console.log(snippetId,objectId, typeof id);
   console.log(isUserValidForUpdate)
 
   if(!isUserValidForUpdate){
