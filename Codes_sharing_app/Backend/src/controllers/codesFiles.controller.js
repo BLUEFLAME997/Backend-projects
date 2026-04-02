@@ -3,9 +3,12 @@ const fileModel=require('../model/files.model');
 
 async function saveFileController(req,res){
   const {snippetId}=req.params;
-  const {fileName,language,userId,codeSnippet,isPublic}=req.body;
+  const user=req.user;
+  const userId=user.id;
+  const {fileName,language,codeSnippet,isPublic}=req.body;
   const isCodeSnippetAlreadyExist = await fileModel.findOne({
-    snippetId
+    snippetId,
+    userId
   })
 
   if(isCodeSnippetAlreadyExist){
@@ -15,7 +18,8 @@ async function saveFileController(req,res){
   }
 
   const isFileNameAlreadyExist=await fileModel.findOne({
-    fileName
+    fileName,
+    userId
   })
 
   if(isFileNameAlreadyExist){
