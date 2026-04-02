@@ -1,19 +1,38 @@
 const { default: mongoose } = require('mongoose');
 const fileModel=require('../model/files.model');
+const {nanoid}=require('nanoid');
+
+async function getNewSnippetId(){
+  let exist=true;
+  let snippet=null;
+  let id=null;
+
+  while(exist){
+    id=nanoid(10);
+    snippet=await fileModel.findOne({
+      snippetId:id
+    })
+
+    if(!snippet){
+      exist=false;
+    }
+  }
+  return id
+}
 
 async function saveFileController(req,res){
-  const {snippetId}=req.params;
   const user=req.user;
   const userId=user.id;
   const {fileName,language,codeSnippet,isPublic}=req.body;
+  const snippetId=await getNewSnippetId();
+
   const isCodeSnippetAlreadyExist = await fileModel.findOne({
-    snippetId,
-    userId
+    snippetId
   })
 
   if(isCodeSnippetAlreadyExist){
     return res.status(409).json({
-      Message:"Code snippet already exist"
+      Message:"Snippet ID already exist"
     })
   }
 
@@ -64,10 +83,7 @@ async function updateFileController(req,res){
     snippetId,
     userId:objectId
   })
-
-  console.log(snippetId,objectId, typeof id);
-  console.log(isUserValidForUpdate)
-
+  
   if(!isUserValidForUpdate){
     return res.status(400).json({
       Message:"User not valid to change this file"

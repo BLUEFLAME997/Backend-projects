@@ -6,10 +6,10 @@ const indentifyUser=require('../middleware/auth.middleware');
 const identifyUser = require('../middleware/auth.middleware');
 
 /* 
-@route: POST /api/snippet/save/:snippetId
-@description: To get the value and save file in the database
+@route: POST /api/snippet/save
+@description: Save file in the database on the basis of user request and given data
 */
-codeFilesRoute.post('/save/:snippetId',identifyUser,codeFilesController.saveFileController);
+codeFilesRoute.post('/save',identifyUser,codeFilesController.saveFileController);
 /* 
 @route: POST /api/snippet/update/:snippetId
 @description: To update the code snippet give by the user

@@ -25,7 +25,7 @@ const SaveFilePopUp = () => {
         </div>
         <div className="input-field">
           <input type="text" name='filename' placeholder='Enter file name: ' />
-          <input type="text" name='fileExtention' placeholder='Enter file extention: ' />
+          {/* <input type="text" name='fileExtention' placeholder='Enter file extention: ' /> */}
         </div>
         <div className="save-file-buttons">
           <button className='btn1'
