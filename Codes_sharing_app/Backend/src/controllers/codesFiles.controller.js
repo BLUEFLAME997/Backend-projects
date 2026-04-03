@@ -83,7 +83,7 @@ async function updateFileController(req,res){
     snippetId,
     userId:objectId
   })
-  
+
   if(!isUserValidForUpdate){
     return res.status(400).json({
       Message:"User not valid to change this file"
@@ -93,7 +93,9 @@ async function updateFileController(req,res){
   const updated = await fileModel.updateOne(
     {snippetId:snippetId},
     {$set:{
-      codeSnippet:codeSnippet
+      language:language,
+      codeSnippet:codeSnippet,
+      isPublic:isPublic
     }}
   )
 

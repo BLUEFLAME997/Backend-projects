@@ -1,0 +1,23 @@
+.snippet-name{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+
+  .filename{
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    h1{
+      text-transform: capitalize;
+      font-weight: 500;
+      font-size: 2rem;
+    }
+  }
+  p{
+    font-size: 0.8rem;
+  }
+}
