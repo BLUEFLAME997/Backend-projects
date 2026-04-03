@@ -105,7 +105,25 @@ async function updateFileController(req,res){
   })
 }
 
+async function getFilename(req,res){
+  const {snippetId}=req.params;
+  const file=await fileModel.findOne({
+    snippetId:snippetId
+  })
+  if(!file){
+    return res.status(404).json({
+      Message:"Invalid snippetId , file not found"
+    })
+  }
+
+  res.status(200).json({
+    Message:"File fetched successfully",
+    file
+  })
+}
+
 module.exports={
   saveFileController,
-  updateFileController
+  updateFileController,
+  getFilename
 }

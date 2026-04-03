@@ -5,13 +5,16 @@ import { SnippetsContext } from '../Snippets.context'
 import { useSnippets } from '../hooks/useSnippet'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 
 const SaveFilePopUp = () => {
   const context = useContext(SnippetsContext);
-  const { savePopUp, setSavePopUp, languageValue, value, snippetId, setSnippetId, filename, setFilename } = context;
-  const { handleSaveFile } = useSnippets();
+  const { savePopUp, setSavePopUp, languageValue, setLanguageValue, value, setValue, snippetId, setSnippetId, filename, setFilename } = context;
+  const { handleSaveFile, handleFileData } = useSnippets();
   const [newFilename, setNewFilename] = useState('');
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+  const { snippetId: paramsSnippetId } = useParams();
 
   const saveFile = async () => {
     try {
@@ -20,7 +23,6 @@ const SaveFilePopUp = () => {
       const { codeFile } = data;
       setFilename(codeFile.fileName);
       setSnippetId(codeFile.snippetId);
-      navigate(`/?snippetId=${snippetId}`);
       return response;
     } catch (err) {
       console.log(err)
@@ -28,11 +30,34 @@ const SaveFilePopUp = () => {
     }
   }
 
-
   const handleSaveFilePopup = () => {
     setSavePopUp(false);
     console.log(savePopUp)
   }
+
+  const getFileName = async () => {
+    try {
+      const response = await handleFileData(snippetId);
+      console.log(response.data);
+      setFilename(response.data.file.fileName);
+      setLanguageValue(response.data.file.language);
+      setValue(response.data.file.codeSnippet);
+      return response
+    } catch (err) {
+      console.log("Error: ", err)
+      throw err;
+    }
+  }
+
+  useEffect(() => {
+    setSnippetId(paramsSnippetId);
+  })
+
+  useEffect(() => {
+    if (snippetId) {
+      getFileName();
+    }
+  }, [snippetId])
 
   return (
     <div className={`main-container`}>
@@ -54,7 +79,6 @@ const SaveFilePopUp = () => {
             value={newFilename}
             onChange={(e) => {
               setNewFilename(e.target.value);
-
             }}
           />
 
@@ -63,9 +87,12 @@ const SaveFilePopUp = () => {
           <button className='btn1'
             onClick={handleSaveFilePopup}>Cancel</button>
           <button className='btn2'
-            onClick={()=>{
-              saveFile();
+            onClick={async () => {
+              let res = await saveFile();
+              let id = res.data.codeFile.snippetId;
+              setSnippetId(id);
               handleSaveFilePopup();
+              navigate(`/snippet/${id}`)
             }}>Save</button>
         </div>
       </div>

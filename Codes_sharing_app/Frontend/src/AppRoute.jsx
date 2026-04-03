@@ -14,5 +14,8 @@ export const Approute=createBrowserRouter([
   },{
     path:'/',
     element:<Dashboard/>
+  },{
+    path:'/snippet/:snippetId',
+    element:<Dashboard/>
   }
 ])

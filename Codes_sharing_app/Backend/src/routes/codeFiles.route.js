@@ -15,5 +15,10 @@ codeFilesRoute.post('/save',identifyUser,codeFilesController.saveFileController)
 @description: To update the code snippet give by the user
 */
 codeFilesRoute.post('/update/:snippetId',indentifyUser,codeFilesController.updateFileController);
+/* 
+@route: GET /api/snippet/file
+@description: To get the file data throught the snippet ID
+*/
+codeFilesRoute.get('/file/:snippetId',identifyUser,codeFilesController.getFilename);
 
 module.exports=codeFilesRoute;

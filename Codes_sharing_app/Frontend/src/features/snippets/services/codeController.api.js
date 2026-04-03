@@ -35,3 +35,14 @@ export async function updateCodeFileAPI(snippetId,language,codeSnippet,isPublic)
     throw err
   }
 }
+
+export async function fileDataApi(snippetId){
+  try{
+    const response = await API.get(`/file/${snippetId}`)
+
+    return response;
+
+  }catch(err){
+    throw err
+  }
+}

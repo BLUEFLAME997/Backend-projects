@@ -10,7 +10,6 @@ import SaveFilePopUp from '../components/SaveFilePopUp'
 import { SnippetsContext } from '../Snippets.context'
 import SnippetName from '../components/SnippetName'
 import { useSnippets } from '../hooks/useSnippet'
-import { useSearchParams } from "react-router-dom";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -18,7 +17,6 @@ const Dashboard = () => {
   const context = useContext(SnippetsContext);
   const { savePopUp, setSavePopUp, languageValue, value, snippetId, setSnippetId } = context;
   const { handleUpdateFile } = useSnippets();
-  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     if (user === null) {
