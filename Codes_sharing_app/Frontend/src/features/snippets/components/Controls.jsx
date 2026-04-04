@@ -1,11 +1,25 @@
 import React, { useContext, useState } from 'react'
 import { SnippetsContext } from '../Snippets.context';
+import { useParams } from 'react-router-dom';
 
 const Controls = () => {
   const context = useContext(SnippetsContext);
   const {languageValue,setLanguageValue,theme,setTheme}=context;
   const [openFirst,setOpenFirst]=useState(false);
   const [openSecond,setOpenSecond]=useState(false);
+  const {snippetId:paramsSnippetId}=useParams();
+
+  const handleShareLogic=()=>{
+    if(!paramsSnippetId){
+      alert('Save file first');
+      return;
+    }
+
+    const url = `${window.location.origin}/snippet/${paramsSnippetId}`;
+    navigator.clipboard.writeText(url);
+
+    alert('Link copied');
+  }
 
   return (
     <div className="controls">
@@ -85,7 +99,8 @@ const Controls = () => {
         </div>
       </div>
       <div className="buttons">
-        <button className='share-btn'>Share</button>
+        <button className='share-btn'
+        onClick={handleShareLogic}>Share</button>
         <button className='cpy-btn'>Copy</button>
       </div>
     </div>

@@ -12,9 +12,10 @@ const SnippetContextProvider=({children})=>{
   const [savePopUp,setSavePopUp]=useState(false);
   const [snippetId,setSnippetId]=useState('');
   const [filename,setFilename]=useState('');
+  const [loggedIn,setLoggedIn]=useState(false);
 
   return (
-    <SnippetsContext.Provider value={{languageValue,theme,setLanguageValue,setTheme,value,setValue,output,setOutput,savePopUp,setSavePopUp,snippetId,setSnippetId,filename,setFilename}}>
+    <SnippetsContext.Provider value={{languageValue,theme,setLanguageValue,setTheme,value,setValue,output,setOutput,savePopUp,setSavePopUp,snippetId,setSnippetId,filename,setFilename,loggedIn,setLoggedIn}}>
       {children}
     </SnippetsContext.Provider>
   )

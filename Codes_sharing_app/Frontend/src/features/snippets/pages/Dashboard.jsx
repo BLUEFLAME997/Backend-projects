@@ -10,12 +10,13 @@ import SaveFilePopUp from '../components/SaveFilePopUp'
 import { SnippetsContext } from '../Snippets.context'
 import SnippetName from '../components/SnippetName'
 import { useSnippets } from '../hooks/useSnippet'
+import LoginPopUp from '../components/LoginPopUp'
 
 const Dashboard = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const context = useContext(SnippetsContext);
-  const { savePopUp, setSavePopUp, languageValue, value, snippetId, setSnippetId } = context;
+  const { savePopUp, setSavePopUp, languageValue, value, snippetId, setSnippetId, loggedIn, setLoggedIn} = context;
   const { handleUpdateFile } = useSnippets();
 
   useEffect(() => {
@@ -23,7 +24,16 @@ const Dashboard = () => {
       console.log(user)
       navigate('/login')
     }
-  }, [user,navigate])
+  }, [user, navigate])
+
+  useEffect(() => {
+    if (user) {
+      setLoggedIn(true);
+      setTimeout(() => {
+        setLoggedIn(false);
+      }, 2000)
+    }
+  })
 
   if (user === undefined) {
     return (
@@ -64,6 +74,7 @@ const Dashboard = () => {
         </button>
       </div>
       <SaveFilePopUp />
+      {/* <LoginPopUp /> */}
     </section>
   )
 }
