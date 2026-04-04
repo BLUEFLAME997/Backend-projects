@@ -99,9 +99,13 @@ async function updateFileController(req,res){
     }}
   )
 
+  const file=await fileModel.findOne({
+    snippetId:snippetId
+  })
+
   res.status(200).json({
     Message:"Update successfull",
-    updated
+    file
   })
 }
 

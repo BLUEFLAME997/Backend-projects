@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../style/snippetName.scss'
 import { useContext } from 'react'
 import { SnippetsContext } from '../Snippets.context'

@@ -10,14 +10,17 @@ import SaveFilePopUp from '../components/SaveFilePopUp'
 import { SnippetsContext } from '../Snippets.context'
 import SnippetName from '../components/SnippetName'
 import { useSnippets } from '../hooks/useSnippet'
-import LoginPopUp from '../components/LoginPopUp'
+import LoginPopUp from '../components/LoginPopUp';
+import { useParams } from 'react-router-dom'
 
 const Dashboard = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const context = useContext(SnippetsContext);
-  const { savePopUp, setSavePopUp, languageValue, value, snippetId, setSnippetId, loggedIn, setLoggedIn} = context;
+  const { savePopUp, setSavePopUp, languageValue,setLanguageValue, value,setValue, snippetId, setSnippetId, loggedIn, setLoggedIn} = context;
   const { handleUpdateFile } = useSnippets();
+  const {handleFileData}=useSnippets();
+  const {snippetId:paramSnippetId}=useParams();
 
   useEffect(() => {
     if (user === null) {
@@ -26,14 +29,24 @@ const Dashboard = () => {
     }
   }, [user, navigate])
 
-  useEffect(() => {
-    if (user) {
-      setLoggedIn(true);
-      setTimeout(() => {
-        setLoggedIn(false);
-      }, 2000)
+  // useEffect(() => {
+  //   if (user) {
+  //     setLoggedIn(true);
+  //     setTimeout(() => {
+  //       setLoggedIn(false);
+  //     }, 2000)
+  //   }
+  // })
+
+  useEffect(()=>{
+    const fileData=async()=>{
+      const response = await handleFileData(paramSnippetId);
+      console.log("Data about file: ",response);
+      setLanguageValue(response.data.file.language);
+      setValue(response.data.file.codeSnippet)
     }
-  })
+    fileData();
+  },[])
 
   if (user === undefined) {
     return (
@@ -49,7 +62,9 @@ const Dashboard = () => {
   const updateFile = async () => {
     try {
       const response = await handleUpdateFile(languageValue, value, true);
-      console.log(response);
+      console.log(response)
+      setLanguageValue(response.data.file.language);
+      setValue(response.data.file.codeSnippet);
       return response;
     } catch (err) {
       console.log(err)
