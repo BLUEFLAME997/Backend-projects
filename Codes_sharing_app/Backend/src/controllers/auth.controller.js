@@ -40,7 +40,11 @@ async function userRegisterController(req, res) {
     id: user._id
   }, process.env.JWT_SECRET)
 
-  res.cookie('JWT_TOKEN', token);
+  res.cookie('JWT_TOKEN', token), {
+    httpOnly: true,
+    secure: true,        // required for HTTPS
+    sameSite: "None"     // required for cross-origin
+  };
 
   res.status(201).json({
     Message: "User created successfuly"
@@ -76,7 +80,11 @@ async function userLoginController(req, res) {
     email: isUserExist.email
   }, process.env.JWT_SECRET)
 
-  res.cookie("JWT_TOKEN", token);
+  res.cookie("JWT_TOKEN", token, {
+    httpOnly: true,
+    secure: true,        // required for HTTPS
+    sameSite: "None"     // required for cross-origin
+  });
   res.status(200).json({
     Message: "Logged in successfully",
     isUserExist
