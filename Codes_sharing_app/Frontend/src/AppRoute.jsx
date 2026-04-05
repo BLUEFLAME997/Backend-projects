@@ -3,6 +3,7 @@ import {createBrowserRouter} from 'react-router-dom';
 import Login from './features/auth/pages/Login';
 import Register from './features/auth/pages/Register';
 import Dashboard from './features/snippets/pages/Dashboard'
+import Snippets from './features/snippets/pages/Snippets';
 
 export const Approute=createBrowserRouter([
   {
@@ -17,5 +18,8 @@ export const Approute=createBrowserRouter([
   },{
     path:'/snippet/:snippetId',
     element:<Dashboard/>
+  },{
+    path:'/snippet',
+    element:<Snippets/>
   }
 ])

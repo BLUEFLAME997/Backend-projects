@@ -17,9 +17,6 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const verify = async () => {
       try {
-        // const response = await verifyUserApi();
-        // console.log("response: ", response.data.user);
-        // setUser(response.data.user);
         await handleUserVerifyApi();
       } catch (err) {
         setUser(null);

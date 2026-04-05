@@ -4,6 +4,7 @@ import { executeCode } from "../services/snippets.api";
 import { saveCodeFileApi } from "../services/codeController.api";
 import { updateCodeFileAPI } from "../services/codeController.api";
 import { fileDataApi } from "../services/codeController.api";
+import { allCodeSnippetsApi } from "../services/codeController.api";
 
 export const useSnippets=()=>{
   const context = useContext(SnippetsContext);
@@ -48,5 +49,15 @@ export const useSnippets=()=>{
     }
   }
 
-  return {languageValue,value,handleCodeOuput,handleSaveFile,handleUpdateFile,handleFileData};
+  const handleAllCodeSnippet=async()=>{
+    try{
+      const response = await allCodeSnippetsApi();
+      return response;
+    }catch(err){
+      console.log(err)
+      throw err
+    }
+  }
+
+  return {languageValue,value,handleCodeOuput,handleSaveFile,handleUpdateFile,handleFileData,handleAllCodeSnippet};
 }
