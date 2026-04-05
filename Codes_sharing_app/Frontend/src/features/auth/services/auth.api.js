@@ -1,6 +1,6 @@
 import axios from 'axios';
 const API = axios.create({
-  baseURL: 'http://localhost:8000/api/auth',
+  baseURL: 'https://backend-projects-davh.onrender.com/api/auth',
   withCredentials: true
 })
 
