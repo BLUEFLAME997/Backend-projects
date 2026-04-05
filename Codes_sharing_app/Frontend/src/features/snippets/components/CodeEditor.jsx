@@ -8,7 +8,7 @@ import { useSnippets } from '../hooks/useSnippet';
 
 const CodeEditor = () => {
   const context = useContext(SnippetsContext);
-  const {languageValue,value,setValue,output,setOutput,editorRef}=context;
+  const {languageValue,value,setValue,output,setOutput,editorRef,theme}=context;
   const {handleCodeOuput}=useSnippets();
 
   const onMount=(editor)=>{
@@ -39,6 +39,7 @@ const CodeEditor = () => {
           setValue(value)
         }}
         onMount={onMount}
+        theme={theme}
         />
       </section>
       <section className="code-output-section">

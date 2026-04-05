@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 const Controls = () => {
   const context = useContext(SnippetsContext);
-  const {languageValue,setLanguageValue,theme,setTheme}=context;
+  const {languageValue,setLanguageValue,theme,setTheme,value}=context;
   const [openFirst,setOpenFirst]=useState(false);
   const [openSecond,setOpenSecond]=useState(false);
   const {snippetId:paramsSnippetId}=useParams();
@@ -19,6 +19,11 @@ const Controls = () => {
     navigator.clipboard.writeText(url);
 
     alert('Link copied');
+  }
+
+  const handleCopyLogic=()=>{
+    navigator.clipboard.writeText(value);
+    alert("Code copied on clipboard");
   }
 
   return (
@@ -87,7 +92,7 @@ const Controls = () => {
           <div className={`themes ${openSecond?"open":"close"}`}>
             <button
             onClick={()=>{
-              setTheme('dark')
+              setTheme('vs-dark')
               setOpenSecond(!openSecond)
             }}>Dark</button>
             <button
@@ -95,13 +100,19 @@ const Controls = () => {
               setTheme('light')
               setOpenSecond(!openSecond)
             }}>Light</button>
+            <button
+            onClick={()=>{
+              setTheme('hc-black')
+              setOpenSecond(!openSecond)
+            }}>Hc-black</button>
           </div>
         </div>
       </div>
       <div className="buttons">
         <button className='share-btn'
         onClick={handleShareLogic}>Share</button>
-        <button className='cpy-btn'>Copy</button>
+        <button className='cpy-btn'
+        onClick={handleCopyLogic}>Copy</button>
       </div>
     </div>
   )
