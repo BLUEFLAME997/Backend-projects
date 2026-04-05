@@ -107,8 +107,17 @@ async function userVerifyController(req, res) {
   })
 }
 
+async function userLogoutController(req, res) {
+  res.clearCookie('JWT_TOKEN');
+
+  return res.status(200).json({
+    message: "Logged out successfully"
+  });
+}
+
 module.exports = {
   userRegisterController,
   userLoginController,
-  userVerifyController
+  userVerifyController,
+  userLogoutController
 }

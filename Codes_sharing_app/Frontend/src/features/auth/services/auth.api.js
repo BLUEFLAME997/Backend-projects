@@ -47,3 +47,13 @@ export async function verifyUserApi() {
 
 }
 
+export async function logoutUser() {
+  try {
+
+    const response = await API.post('/logout');
+    return response;
+
+  } catch (err) {
+    throw err;
+  }
+}

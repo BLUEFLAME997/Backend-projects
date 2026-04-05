@@ -14,13 +14,13 @@ import LoginPopUp from '../components/LoginPopUp';
 import { useParams } from 'react-router-dom'
 
 const Dashboard = () => {
-  const { user } = useAuth();
+  const { user, handleLogoutUserApi } = useAuth();
   const navigate = useNavigate();
   const context = useContext(SnippetsContext);
-  const { savePopUp, setSavePopUp, languageValue,setLanguageValue, value,setValue, snippetId, setSnippetId, loggedIn, setLoggedIn} = context;
+  const { savePopUp, setSavePopUp, languageValue, setLanguageValue, value, setValue, snippetId, setSnippetId, loggedIn, setLoggedIn } = context;
   const { handleUpdateFile } = useSnippets();
-  const {handleFileData}=useSnippets();
-  const {snippetId:paramSnippetId}=useParams();
+  const { handleFileData } = useSnippets();
+  const { snippetId: paramSnippetId } = useParams();
 
   useEffect(() => {
     if (user === null) {
@@ -29,24 +29,25 @@ const Dashboard = () => {
     }
   }, [user, navigate])
 
-  // useEffect(() => {
-  //   if (user) {
-  //     setLoggedIn(true);
-  //     setTimeout(() => {
-  //       setLoggedIn(false);
-  //     }, 2000)
-  //   }
-  // })
+  const handleLogoutUser = async () => {
+    try {
+      const response = await handleLogoutUserApi();
+      navigate('/login');
+      return response;
+    } catch (err) {
+      throw err
+    }
+  }
 
-  useEffect(()=>{
-    const fileData=async()=>{
+  useEffect(() => {
+    const fileData = async () => {
       const response = await handleFileData(paramSnippetId);
-      console.log("Data about file: ",response);
+      console.log("Data about file: ", response);
       setLanguageValue(response.data.file.language);
       setValue(response.data.file.codeSnippet)
     }
     fileData();
-  },[])
+  }, [])
 
   if (user === undefined) {
     return (
@@ -74,7 +75,7 @@ const Dashboard = () => {
 
   return (
     <section className='dashboard-page'>
-      <Navbar />
+      <Navbar handleLogout={handleLogoutUser}/>
       <SnippetName />
       <Controls />
       <CodeEditor />

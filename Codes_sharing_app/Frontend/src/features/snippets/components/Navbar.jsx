@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Navbar = () => {
+const Navbar = ({handleLogout}) => {
   const navigate = useNavigate();
   const handleNavigate=()=>{
     navigate('/snippet')
@@ -15,7 +15,10 @@ const Navbar = () => {
       <div className="nav-buttons">
         <button
         onClick={handleNavigate}>My Snippets</button>
-        <button className='logout'>Logout</button>
+        <button className='logout'
+        onClick={()=>{
+          handleLogout();
+        }}>Logout</button>
       </div>
     </nav>
   )

@@ -20,4 +20,10 @@ authRoute.post('/login',authController.userLoginController);
 */
 authRoute.get('/get-me',authController.userVerifyController);
 
+/* 
+@route: POST /api/auth/logout
+@description: logout user from the website
+*/
+authRoute.post('/logout',authController.userLogoutController);
+
 module.exports=authRoute

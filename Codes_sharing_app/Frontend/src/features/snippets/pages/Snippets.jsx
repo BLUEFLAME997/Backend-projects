@@ -29,15 +29,9 @@ const Snippets = () => {
     runSnippet();
   },[])
 
-  const imageObject = {
-    javascript: js,
-    java: java,
-    c: c,
-  }
-
   return (
     <section className='all-snippets'>
-      <h1>My snippets</h1>
+      <h1>My Snippets</h1>
       {codeSnippetsArray.map((elem,idx)=>{
         return <CodeFile key={idx} snippetId={elem.snippetId} filename={elem.fileName}/>
       })}
