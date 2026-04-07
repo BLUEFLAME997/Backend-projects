@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
   credentials: true,
-  origin: 'https://backend-projects-zjgh.vercel.app/login'
+  origin: true
 }))
 
 /* 

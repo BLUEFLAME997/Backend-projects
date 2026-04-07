@@ -40,11 +40,11 @@ async function userRegisterController(req, res) {
     id: user._id
   }, process.env.JWT_SECRET)
 
-  res.cookie('JWT_TOKEN', token), {
+  res.cookie('JWT_TOKEN', token,{
     httpOnly: true,
-    secure: true,        // required for HTTPS
-    sameSite: "None"     // required for cross-origin
-  };
+    secure: true,    
+    sameSite: "None"     
+  })
 
   res.status(201).json({
     Message: "User created successfuly"
@@ -82,8 +82,8 @@ async function userLoginController(req, res) {
 
   res.cookie("JWT_TOKEN", token, {
     httpOnly: true,
-    secure: true,        // required for HTTPS
-    sameSite: "None"     // required for cross-origin
+    secure: true,     
+    sameSite: "None"
   });
   res.status(200).json({
     Message: "Logged in successfully",
@@ -116,7 +116,11 @@ async function userVerifyController(req, res) {
 }
 
 async function userLogoutController(req, res) {
-  res.clearCookie('JWT_TOKEN');
+  res.clearCookie('JWT_TOKEN',{
+  httpOnly: true,
+  secure: true,
+  sameSite: "None"
+});
 
   return res.status(200).json({
     message: "Logged out successfully"
