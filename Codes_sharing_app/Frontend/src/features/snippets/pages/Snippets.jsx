@@ -29,12 +29,21 @@ const Snippets = () => {
     runSnippet();
   },[])
 
+  const handleNewSnippetCreation=()=>{
+    navigate('/');
+  }
+
   return (
     <section className='all-snippets'>
       <h1>My Snippets</h1>
       {codeSnippetsArray.map((elem,idx)=>{
         return <CodeFile key={idx} snippetId={elem.snippetId} filename={elem.fileName}/>
       })}
+
+      <button className="create-new-snippte"
+      onClick={handleNewSnippetCreation}>
+        New+
+      </button>
     </section>
   )
 }
