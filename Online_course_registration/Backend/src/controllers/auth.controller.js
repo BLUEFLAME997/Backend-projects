@@ -45,3 +45,43 @@ async function userRegisterController(req,res){
     Message:"User created successfully"
   })
 }
+
+async function userLoginController(req,res){
+  const {username,password}=req.body;
+  
+  const isUserExist=await userModel.findOne({
+    $or:[
+      {username:username},
+      {email:username}
+    ]
+  })
+  if(!isUserExist){
+    return res.status(404).json({
+      Message:"User not found"
+    })
+  }
+
+  const isPasswordCorrect = await bcrypt.compare(password,isUserExist.password);
+  if(!isPasswordCorrect){
+    return res.status(401).json({
+      Message:"Password incorrect"
+    })
+  }
+
+  const token = jwt.sign({
+    id:isUserExist._id,
+    username:isUserExist.username,
+    email:isUserExist.email
+  },process.env.JWT_SECRET,{expiresIn:'1d'})
+
+  res.cookie("JWT_TOKEN",token);
+  res.status(200).json({
+    Message:"User logged in successfully"
+  })
+
+}
+
+module.exports={
+  userRegisterController,
+  userLoginController
+}
