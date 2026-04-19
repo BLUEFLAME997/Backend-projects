@@ -2,26 +2,33 @@ const mongoose = require('mongoose');
 const courseSchema=new mongoose.Schema({
   title:{
     type:String,
-    required:[true,"Title for the course is required"]
+    required:[true,"Title for the course is required"],
+    trim:true,
+    minlength:[3,"Title must be at least 3 characters"]
   },
   description:{
     type:String
   },
   instructor:{
     type:String,
-    required:[true,"Instructore required"]
+    required:[true,"Instructore required"],
+    trim:true,
+    minlength:[1,"Instructure must be at least 1 character"]
   },
   schedule:{
     type:String,
-    required:[true,"Schedule of the course is required"]
+    required:[true,"Schedule of the course is required"],
+    trim:true
   },
   credits:{
-    type:String,
-    default:"0"
+    type:Number,
+    default:0,
+    min: [0, "Credits cannot be negative"],
   },
   capacity:{
     type:Number,
-    required:[true,"capacity of the course required"]
+    required:[true,"capacity of the course required"],
+    min: [0, "Enrolled count cannot be negative"]
   },
   createdBy:{
     type:mongoose.Schema.Types.ObjectId,
