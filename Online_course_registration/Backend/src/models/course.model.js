@@ -28,7 +28,11 @@ const courseSchema=new mongoose.Schema({
   capacity:{
     type:Number,
     required:[true,"capacity of the course required"],
-    min: [1, "Enrolled count cannot be negative"]
+    min: [1 , "Enrolled count cannot be negative"]
+  },
+  enrolledCount:{
+    type:Number,
+    default:0
   },
   createdBy:{
     type:mongoose.Schema.Types.ObjectId,
