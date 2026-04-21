@@ -24,5 +24,10 @@ courseRoute.get('/:courseId',identifyUser,courseController.getCourseDetailContro
 @description: To update the course fields
 */
 courseRoute.patch('/:courseId',identifyUser,courseController.updateCourseController);
+/* 
+@route: PATCH /api/course/:id
+@description: To update the course count of the specific course document
+*/
+courseRoute.patch('/:courseId',identifyUser,courseController.updateCourseEnrollCountController);
 
 module.exports = courseRoute;

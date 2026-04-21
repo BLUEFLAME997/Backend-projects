@@ -101,43 +101,71 @@ async function updateCourseController(req, res) {
   const { description, instructor, schedule, capacity } = req.body;
 
   const isCourseExist = await courseModel.findOne({
-    _id:courseId
+    _id: courseId
   })
-  if(!courseId){
+  if (!courseId) {
     return res.status(404).json({
-      Message:"Course not found for update"
+      Message: "Course not found for update"
     })
   }
 
-  if(isNaN(Number(capacity))){
+  if (isNaN(Number(capacity))) {
     return res.status(400).json({
-      Message:"Capacity should be a number",
+      Message: "Capacity should be a number",
       capacity
     })
   }
-  
+
   const courseCapacityValue = Number(capacity);
 
-  if(courseCapacityValue<isCourseExist.enrolledCount){
+  if (courseCapacityValue < isCourseExist.enrolledCount) {
     return res.status(400).json({
-      Message:"Capacity cannot be less than enrolled students"
+      Message: "Capacity cannot be less than enrolled students"
     })
   }
 
   const updatedCourse = await courseModel.updateOne({
-    _id:courseId
-  },{
-    $set:{
-      description:description,
-      instructor:instructor,
-      schedule:schedule,
-      capacity:courseCapacityValue
+    _id: courseId
+  }, {
+    $set: {
+      description: description,
+      instructor: instructor,
+      schedule: schedule,
+      capacity: courseCapacityValue
     }
   })
 
   res.status(200).json({
-    Message:"Course found",
+    Message: "Course found",
     isCourseExist
+  })
+}
+
+async function updateCourseEnrollCountController(req, res) {
+  const { courseId } = req.params;
+
+  const isCourseExist = await courseModel.findOne({
+    _id: courseId
+  })
+  if (!isCourseExist) {
+    return res.status(404).json({
+      Message: "Course not found"
+    })
+  }
+
+  const count = isCourseExist.enrolledCount+1;
+
+  const updateEnrollCount = await courseModel.updateOne({
+    _id:courseId
+  },{
+    $set:{
+      enrolledCount:count
+    }
+  })
+
+  res.status(200).json({
+    Message:"EnrollCount updated successfully",
+    updateEnrollCount
   })
 }
 
@@ -145,5 +173,6 @@ module.exports = {
   createCourseController,
   getCourseController,
   getCourseDetailController,
-  updateCourseController
+  updateCourseController,
+  updateCourseEnrollCountController
 }
