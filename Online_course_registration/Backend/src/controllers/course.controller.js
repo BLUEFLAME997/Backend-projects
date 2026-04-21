@@ -43,40 +43,61 @@ async function getCourseController(req, res) {
   const credits = req.params.credits;
 
   let filter = {};
-  if(search && search.trim()!==""){
-    filter.title={$regex:search,$options:'i'}
+  if (search && search.trim() !== "") {
+    filter.title = { $regex: search, $options: 'i' }
   }
 
-  if(instructor && instructor.trim()!==""){
-    filter.instructor=instructor
+  if (instructor && instructor.trim() !== "") {
+    filter.instructor = instructor
   }
 
-  if(credits && credits.trim()!==""){
-    filter.credits=Number(credits);
+  if (credits && credits.trim() !== "") {
+    filter.credits = Number(credits);
   }
 
-  const skip = (page-1)*(limit);
+  const skip = (page - 1) * (limit);
 
   const allCourses = await courseModel
-            .find(filter)
-            .skip(skip)
-            .limit(limit)
-            .select("title instructor schedule capacity enrolledCount")
-            .sort({createdAt:-1});
+    .find(filter)
+    .skip(skip)
+    .limit(limit)
+    .select("title instructor schedule capacity enrolledCount")
+    .sort({ createdAt: -1 });
 
-  const totalCourses=await courseModel.find(filter);
+  const totalCourses = await courseModel.find(filter);
 
   res.status(200).json({
-    Message:"Course fetched successfully",
-    success:true,
+    Message: "Course fetched successfully",
+    success: true,
     page,
     limit,
     totalCourses,
-    totalPages:Math.ceil(totalCourses/limit),
-    data:allCourses
+    totalPages: Math.ceil(totalCourses / limit),
+    data: allCourses
+  })
+}
+
+async function getCourseDetailController(req, res) {
+  const { courseId } = req.params;
+  const courseDetail = await courseModel.findOne({
+    _id: courseId
+  })
+
+  if (!courseDetail) {
+    return res.status(404).json({
+      Message: "Course not found",
+      courseId
+    })
+  }
+
+  res.status(200).json({
+    Message: "Course detail fetched successfully",
+    courseDetail
   })
 }
 
 module.exports = {
-  createCourseController
+  createCourseController,
+  getCourseController,
+  getCourseDetailController
 }
