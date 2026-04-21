@@ -28,6 +28,6 @@ courseRoute.patch('/:courseId',identifyUser,courseController.updateCourseControl
 @route: PATCH /api/course/:id
 @description: To update the course count of the specific course document
 */
-courseRoute.patch('/:courseId',identifyUser,courseController.updateCourseEnrollCountController);
+courseRoute.patch('/update-enrollmentCount/:courseId',identifyUser,courseController.updateCourseEnrollCountController);
 
 module.exports = courseRoute;
