@@ -19,5 +19,10 @@ courseRoute.get('/get-courses', identifyUser, courseController.getCourseControll
 @description: To get details of a particular course
 */
 courseRoute.get('/:courseId',identifyUser,courseController.getCourseDetailController);
+/* 
+@route: PATCH /api/course/:id
+@description: To update the course fields
+*/
+courseRoute.patch('/:courseId',identifyUser,courseController.updateCourseController);
 
 module.exports = courseRoute;

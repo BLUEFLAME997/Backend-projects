@@ -96,8 +96,54 @@ async function getCourseDetailController(req, res) {
   })
 }
 
+async function updateCourseController(req, res) {
+  const { courseId } = req.params;
+  const { description, instructor, schedule, capacity } = req.body;
+
+  const isCourseExist = await courseModel.findOne({
+    _id:courseId
+  })
+  if(!courseId){
+    return res.status(404).json({
+      Message:"Course not found for update"
+    })
+  }
+
+  if(isNaN(Number(capacity))){
+    return res.status(400).json({
+      Message:"Capacity should be a number",
+      capacity
+    })
+  }
+  
+  const courseCapacityValue = Number(capacity);
+
+  if(courseCapacityValue<isCourseExist.enrolledCount){
+    return res.status(400).json({
+      Message:"Capacity cannot be less than enrolled students"
+    })
+  }
+
+  const updatedCourse = await courseModel.updateOne({
+    _id:courseId
+  },{
+    $set:{
+      description:description,
+      instructor:instructor,
+      schedule:schedule,
+      capacity:courseCapacityValue
+    }
+  })
+
+  res.status(200).json({
+    Message:"Course found",
+    isCourseExist
+  })
+}
+
 module.exports = {
   createCourseController,
   getCourseController,
-  getCourseDetailController
+  getCourseDetailController,
+  updateCourseController
 }
