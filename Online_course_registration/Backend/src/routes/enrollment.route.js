@@ -9,5 +9,10 @@ const identifyUser = require('../middleware/auth.middleware');
 @description: To create a enrollment document of the user for the course
 */
 enrollmentRoute.post('/:courseId', identifyUser, enrollmentController.enrollmentController);
+/* 
+@route: GET /api/enrollments/my-courses
+@description: To get all the enrolled courses of the user
+*/
+enrollmentRoute.get('/my-courses',identifyUser,enrollmentController.getEnrolledCoursesController);  
 
 module.exports = enrollmentRoute

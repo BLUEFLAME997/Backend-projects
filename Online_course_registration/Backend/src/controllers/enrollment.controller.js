@@ -52,6 +52,26 @@ async function enrollmentController(req, res) {
   })
 }
 
+async function getEnrolledCoursesController(req,res){
+  try{
+    const userId = req.user.id;
+  const getMyCourses = await enrollmentModel.find({
+    user:userId
+  }).populate('course')
+
+  res.status(200).json({
+    Message:"Courses fetched successfully",
+    getMyCourses
+  })
+  }catch(err){
+    res.status(500).json({
+      Message:"server error",
+      Error:err.message
+    })
+  }
+}
+
 module.exports = {
-  enrollmentController
+  enrollmentController,
+  getEnrolledCoursesController
 }
