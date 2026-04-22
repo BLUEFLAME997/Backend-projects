@@ -3,6 +3,7 @@ const enrollmentRoute = express.Router();
 const enrollmentModel = require('../models/enrollment.model');
 const enrollmentController = require('../controllers/enrollment.controller');
 const identifyUser = require('../middleware/auth.middleware');
+const enrollmentMiddleware = require('../middleware/enrollment.middleware');
 
 /* 
 @route: POST /api/enrollments/:courseId
@@ -13,6 +14,11 @@ enrollmentRoute.post('/:courseId', identifyUser, enrollmentController.enrollment
 @route: GET /api/enrollments/my-courses
 @description: To get all the enrolled courses of the user
 */
-enrollmentRoute.get('/my-courses',identifyUser,enrollmentController.getEnrolledCoursesController);  
+enrollmentRoute.get('/my-courses',identifyUser,enrollmentController.getEnrolledCoursesController);
+/* 
+@route: GET /api/enrollments/course/:courseId
+@description: To get total number of students in a particular course
+*/
+enrollmentRoute.get('/course/:courseId',identifyUser,enrollmentMiddleware.checkAdmin,enrollmentController.getCourseStudentsController);
 
 module.exports = enrollmentRoute

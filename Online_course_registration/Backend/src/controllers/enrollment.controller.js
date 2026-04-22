@@ -17,12 +17,12 @@ async function enrollmentController(req, res) {
   }
 
   const isAlreadyEnrolled = await enrollmentModel.findOne({
-    user:userId,
-    course:courseId
+    user: userId,
+    course: courseId
   })
-  if(isAlreadyEnrolled){
+  if (isAlreadyEnrolled) {
     return res.status(409).json({
-      Message:"User is already enrolled in the course",
+      Message: "User is already enrolled in the course",
       isCourseExist
     })
   }
@@ -52,26 +52,38 @@ async function enrollmentController(req, res) {
   })
 }
 
-async function getEnrolledCoursesController(req,res){
-  try{
+async function getEnrolledCoursesController(req, res) {
+  try {
     const userId = req.user.id;
-  const getMyCourses = await enrollmentModel.find({
-    user:userId
-  }).populate('course')
+    const getMyCourses = await enrollmentModel.find({
+      user: userId
+    }).populate('course')
 
-  res.status(200).json({
-    Message:"Courses fetched successfully",
-    getMyCourses
-  })
-  }catch(err){
+    res.status(200).json({
+      Message: "Courses fetched successfully",
+      getMyCourses
+    })
+  } catch (err) {
     res.status(500).json({
-      Message:"server error",
-      Error:err.message
+      Message: "server error",
+      Error: err.message
     })
   }
 }
 
+async function getCourseStudentsController(req, res) {
+  const {courseId}=req.params;
+  const courseStudents = await enrollmentModel.countDocuments({
+    course:courseId
+  })
+  res.status(200).json({
+    Message:"Students fetched successfully",
+    courseStudents
+  })
+}
+
 module.exports = {
   enrollmentController,
-  getEnrolledCoursesController
+  getEnrolledCoursesController,
+  getCourseStudentsController
 }
