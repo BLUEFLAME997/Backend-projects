@@ -20,5 +20,10 @@ enrollmentRoute.get('/my-courses',identifyUser,enrollmentController.getEnrolledC
 @description: To get total number of students in a particular course
 */
 enrollmentRoute.get('/course/:courseId',identifyUser,enrollmentMiddleware.checkAdmin,enrollmentController.getCourseStudentsController);
+/* 
+@route: DELETE /api/enrollments/course/:courseId\
+@description: To delete the enrollment of the specified course
+*/
+enrollmentRoute.delete('/course/:courseId',identifyUser,enrollmentController.unEnrollmentController);
 
 module.exports = enrollmentRoute

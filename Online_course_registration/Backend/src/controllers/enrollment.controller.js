@@ -82,8 +82,42 @@ async function getCourseStudentsController(req, res) {
   })
 }
 
+async function unEnrollmentController(req,res){
+  const {courseId}=req.params;
+  const userId = req.user.id;
+
+  const isCourseExist=await courseModel.findOne({
+    _id:courseId
+  })
+  if(!isCourseExist){
+    return res.status(404).json({
+      Message:"Course not found"
+    })
+  }
+
+  const isEnrollmentExist = await enrollmentModel.findOne({
+    user:userId,
+    course:courseId
+  })
+  if(!isEnrollmentExist){
+    return res.status(404).json({
+      Message:"Enrollment not fouond"
+    })
+  }
+
+  const enrollmentId = isEnrollmentExist._id;
+  const enrollmentDelete = await enrollmentModel.deleteOne({
+    _id:enrollmentId
+  })
+
+  res.status(200).json({
+    Message:"Enrollment deleted successfully"
+  })
+}
+
 module.exports = {
   enrollmentController,
   getEnrolledCoursesController,
-  getCourseStudentsController
+  getCourseStudentsController,
+  unEnrollmentController
 }
