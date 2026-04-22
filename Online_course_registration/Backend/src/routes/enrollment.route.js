@@ -25,5 +25,10 @@ enrollmentRoute.get('/course/:courseId',identifyUser,enrollmentMiddleware.checkA
 @description: To delete the enrollment of the specified course
 */
 enrollmentRoute.delete('/course/:courseId',identifyUser,enrollmentController.unEnrollmentController);
+/* 
+@route: GET /api/enrollments/check/:courseId
+@description: To check if the use is enrolled into the course
+*/
+enrollmentRoute.get('/check/:courseId',identifyUser,enrollmentController.checkEnrollmentController);
 
 module.exports = enrollmentRoute

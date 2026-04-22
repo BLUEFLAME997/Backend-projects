@@ -115,9 +115,31 @@ async function unEnrollmentController(req,res){
   })
 }
 
+async function checkEnrollmentController(req,res){
+  const {courseId} =req.params;
+  const userId = req.user.id;
+
+  const isEnrolled=await enrollmentModel.findOne({
+    user:userId,
+    course:courseId
+  })
+  if(!isEnrolled){
+    return res.status(404).json({
+      Message:"Enrollment not found",
+      Enrolled:false
+    })
+  }
+
+  res.status(200).json({
+    Message:"User is Enrolled",
+    Enrolled:true
+  })
+}
+
 module.exports = {
   enrollmentController,
   getEnrolledCoursesController,
   getCourseStudentsController,
-  unEnrollmentController
+  unEnrollmentController,
+  checkEnrollmentController
 }
