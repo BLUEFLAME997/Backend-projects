@@ -1,5 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router'
+import '../../style/register.scss'
 
 const Register = () => {
   return (
@@ -8,7 +9,7 @@ const Register = () => {
         <form>
 
           <div className="header">
-            <p>Welcome</p>
+            <h1>Welcome</h1>
             <p>Join us to get started</p>
           </div>
 
