@@ -26,6 +26,13 @@ const Register = () => {
               <label htmlFor="password">Enter password:</label>
               <input type="password" placeholder='abc123' name='password' id='password' />
             </div>
+            <div className="input-contents">
+              <label htmlFor="role">Role:</label>
+              <select name="role" id="role">
+                <option value="student">Student</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
           </div>
 
           <button>Register</button>

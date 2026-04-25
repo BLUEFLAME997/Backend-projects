@@ -56,6 +56,13 @@
             border-radius: 10px;
             background-color: rgba(233, 250, 255, 0.8);
           }
+          select{
+            width: 100%;
+            padding: 0.5rem;
+            border:2px solid black;
+            border-radius: 5px;
+            outline: none;
+          }
         }
       }
       button{
