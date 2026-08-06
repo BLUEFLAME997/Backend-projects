@@ -47,7 +47,7 @@ async function userLoginController(req,res){
   const isUserExist = await userModel.findOne({
     $or:[
       {userName},
-      {email}
+      {email:userName}
     ]
   })
   if(!isUserExist){
@@ -59,12 +59,24 @@ async function userLoginController(req,res){
   const encryptedPassword = await bcrypt.hash(password,10);
 
   const user = await userModel.findOne({
-    userName:userName,
-    password:encryptedPassword
+    $or:[
+      {
+        userName:userName
+      },{
+        email:userName
+      }
+    ]
   })
   if(!user){
     return res.status(401).json({
-      Message:"Incorrect credentials"
+      Message:"Invalid credentials"
+    })
+  }
+
+  const isMatch = bcrypt.compare(password,user.password);
+  if(!isMatch){
+    return res.status(401).json({
+      Message:"Invalid credentials"
     })
   }
 
