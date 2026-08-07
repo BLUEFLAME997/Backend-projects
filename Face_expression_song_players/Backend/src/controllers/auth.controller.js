@@ -109,7 +109,7 @@ async function userLogoutController(req,res){
     })
   }
 
-  const redisResponse = await redis.set(Token,Date.now().toString());
+  const redisResponse = await redis.set(Token,Date.now().toString(),"EX",60);
 
   res.clearCookie("Token");
 
