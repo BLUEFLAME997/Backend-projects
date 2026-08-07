@@ -2,6 +2,7 @@ require('dotenv').config();
 const userModel = require('../models/user.model');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const blackListModel = require('../models/blacklist.model');
 
 async function identifyUser(req,res,next) {
   
@@ -10,6 +11,16 @@ async function identifyUser(req,res,next) {
   if(!Token){
     return res.status(401).json({
       Message:"Token not provided"
+    })
+  }
+
+  const isTokenBlackListed = await blackListModel.findOne({
+    Token
+  })
+
+  if(isTokenBlackListed){
+    return res.status(401).json({
+      Messsage:"Invalid Token"
     })
   }
 
@@ -25,7 +36,6 @@ async function identifyUser(req,res,next) {
   }
 
   req.user=decoded;
-  console.log(req.user);
 
   next();
 }

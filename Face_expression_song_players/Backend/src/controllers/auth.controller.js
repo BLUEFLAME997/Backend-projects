@@ -100,11 +100,18 @@ async function userLoginController(req,res){
 
 // User logout controller: 
 async function userLogoutController(req,res){
-  const {Token} = req.cookies
+  const {Token} = req.cookies;
+
+  if(!Token){
+    return res.status(401).json({
+      Message:"User already logged out"
+    })
+  }
+
   res.clearCookie("Token");
 
   const tokenBlacklist = await blackListModel.create({
-    token:Token
+    Token:Token
   })
 
   res.status(200).json({
