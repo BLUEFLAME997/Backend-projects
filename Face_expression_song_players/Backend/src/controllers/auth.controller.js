@@ -109,7 +109,12 @@ async function userLogoutController(req,res){
     })
   }
 
-  const redisResponse = await redis.set(Token,Date.now().toString(),"EX",60);
+  const decoded = jwt.decode(Token);
+
+  const currentTime = Math.floor(Date.now()/1000);
+  const remainingTime = decoded.exp - currentTime;
+
+  const redisResponse = await redis.set(Token,Date.now().toString(),"EX",remainingTime);
 
   res.clearCookie("Token");
 
