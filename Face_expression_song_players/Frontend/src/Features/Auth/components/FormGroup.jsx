@@ -9,7 +9,9 @@ const FormGroup = ({ label, placeholder, id, type, name, value, onChange }) => {
       id={id} name={name} 
       placeholder={placeholder} 
       value={value}
-      onChange={onChange}/>
+      onChange={onChange}
+      required
+      />
     </div>
   )
 }

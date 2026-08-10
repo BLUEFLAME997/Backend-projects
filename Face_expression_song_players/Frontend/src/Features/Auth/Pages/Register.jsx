@@ -55,7 +55,7 @@ const Register = () => {
               setEmail(e.target.value)
             }}
           />
-          
+
           <FormGroup
             label="Password:"
             placeholder="Enter your password"
