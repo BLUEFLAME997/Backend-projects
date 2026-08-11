@@ -9,7 +9,7 @@ const songSchema = new mongoose.Schema({
     required: [true, "Song poster url required"]
   },
   title: {
-    tyle: String,
+    type: String,
     required: [true, "Title required"]
   }
 })
