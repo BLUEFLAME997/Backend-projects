@@ -18,7 +18,7 @@ export async function registerUser(userName, email, password) {
       password
     })
 
-    return response;
+    return response.data;
 
   } catch (err) {
     throw err
@@ -34,7 +34,7 @@ export async function loginUser(userName, password) {
       password
     })
 
-    return response;
+    return response.data;
 
   } catch (err) {
     throw err
@@ -46,7 +46,7 @@ export async function getMe() {
   try {
 
     const response = await api.get('/get-me')
-    return response;
+    return response.data;
 
   } catch (err) {
     throw err;
@@ -58,7 +58,7 @@ export async function logoutUser() {
   try {
 
     const response = await api.get('/logout')
-    return response;
+    return response.data;
 
   } catch (err) {
     throw err

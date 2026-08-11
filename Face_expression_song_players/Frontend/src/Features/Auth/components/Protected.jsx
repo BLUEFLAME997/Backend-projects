@@ -8,15 +8,15 @@ const Protected = ({children}) =>{
   const navigate = useNavigate();
 
   const {user,loading} = useAuth();
-  if(!loading || !user){
-    navigate('/login');
-  }
+
   if(loading){
     return <h1>Loading</h1>
+  }
+  if(!user){
+    return <Navigate to='/login'/>
   }
 
   return children;
 }
 
 export default Protected;
-// Protected route to make sure the valid user logs in
