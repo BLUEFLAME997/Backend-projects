@@ -72,67 +72,67 @@ async function getEnrolledCoursesController(req, res) {
 }
 
 async function getCourseStudentsController(req, res) {
-  const {courseId}=req.params;
+  const { courseId } = req.params;
   const courseStudents = await enrollmentModel.countDocuments({
-    course:courseId
+    course: courseId
   })
   res.status(200).json({
-    Message:"Students fetched successfully",
+    Message: "Students fetched successfully",
     courseStudents
   })
 }
 
-async function unEnrollmentController(req,res){
-  const {courseId}=req.params;
+async function unEnrollmentController(req, res) {
+  const { courseId } = req.params;
   const userId = req.user.id;
 
-  const isCourseExist=await courseModel.findOne({
-    _id:courseId
+  const isCourseExist = await courseModel.findOne({
+    _id: courseId
   })
-  if(!isCourseExist){
+  if (!isCourseExist) {
     return res.status(404).json({
-      Message:"Course not found"
+      Message: "Course not found"
     })
   }
 
   const isEnrollmentExist = await enrollmentModel.findOne({
-    user:userId,
-    course:courseId
+    user: userId,
+    course: courseId
   })
-  if(!isEnrollmentExist){
+  if (!isEnrollmentExist) {
     return res.status(404).json({
-      Message:"Enrollment not fouond"
+      Message: "Enrollment not fouond"
     })
   }
 
   const enrollmentId = isEnrollmentExist._id;
   const enrollmentDelete = await enrollmentModel.deleteOne({
-    _id:enrollmentId
+    _id: enrollmentId
   })
 
   res.status(200).json({
-    Message:"Enrollment deleted successfully"
+    Message: "Enrollment deleted successfully"
   })
 }
 
-async function checkEnrollmentController(req,res){
-  const {courseId} =req.params;
+async function checkEnrollmentController(req, res) {
+  const { courseId } = req.params;
   const userId = req.user.id;
 
-  const isEnrolled=await enrollmentModel.findOne({
-    user:userId,
-    course:courseId
+  const isEnrolled = await enrollmentModel.findOne({
+    user: userId,
+    course: courseId
   })
-  if(!isEnrolled){
+  if (!isEnrolled) {
     return res.status(404).json({
-      Message:"Enrollment not found",
-      Enrolled:false
+      Message: "Enrollment not found",
+      Enrolled: false
     })
   }
 
   res.status(200).json({
-    Message:"User is Enrolled",
-    Enrolled:true
+    Message: "User is Enrolled",
+    Enrolled: true
   })
 }
 
