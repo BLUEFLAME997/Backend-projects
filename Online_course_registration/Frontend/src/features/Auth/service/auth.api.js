@@ -30,7 +30,7 @@ export async function registerUser(username, email, password, role) {
 export async function loginUser(username, password) {
   try {
 
-    const response = await api.post('/login',{
+    const response = await api.post('/login', {
       username,
       password
     })
@@ -41,4 +41,26 @@ export async function loginUser(username, password) {
   }
 }
 
-// 
+// Get-me Api:
+export async function getMe() {
+  try {
+
+    const response = await api.get('/get-me');
+    return response.data;
+
+  } catch (err) {
+    throw err
+  }
+}
+
+// Logout Api:
+export async function logoutUser() {
+  try {
+
+    const response = await api.get('/logout');
+    return response.data;
+
+  } catch (err) {
+    throw err
+  }
+}
