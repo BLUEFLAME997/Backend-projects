@@ -13,13 +13,18 @@ const Register = () => {
   const [username,setUsername] = useState('');
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
-  const [role,setRole] = useState('Student');
+  const [role,setRole] = useState('student');
 
   async function handleFormData(e){
     e.preventDefault();
     try{
       await handleRegisterApi(username,email,password,role);
-      navigate('/');
+      if(user.role === "student"){
+        navigate('/student');
+      }
+      if(user.role === 'admin'){
+        navigate('/admin')
+      }
     }catch(err){
       throw err
     }

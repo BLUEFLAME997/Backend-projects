@@ -17,7 +17,12 @@ const Login = () => {
     e.preventDefault();
     try{
       await handleLoginApi(username,password);
-      navigate('/');
+      if(user.role === "student"){
+        navigate('/student');
+      }
+      if(user.role === 'admin'){
+        navigate('/admin')
+      }
     }catch(err){
       throw err
     }
