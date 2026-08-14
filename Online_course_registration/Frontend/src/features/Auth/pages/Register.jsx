@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router'
-import '../../style/register.scss'
+import '../style/register.scss'
 
 const Register = () => {
   return (
