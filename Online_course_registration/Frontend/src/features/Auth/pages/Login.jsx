@@ -16,11 +16,11 @@ const Login = () => {
   async function handleFormData(e){
     e.preventDefault();
     try{
-      await handleLoginApi(username,password);
-      if(user.role === "student"){
+      const userVal = await handleLoginApi(username,password);
+      if(userVal.isUserExist.role === "student"){
         navigate('/student');
       }
-      if(user.role === 'admin'){
+      if(userVal.isUserExist.role === 'admin'){
         navigate('/admin')
       }
     }catch(err){

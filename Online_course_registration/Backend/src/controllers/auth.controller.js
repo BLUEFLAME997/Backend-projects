@@ -77,7 +77,8 @@ async function userLoginController(req, res) {
 
   res.cookie("JWT_TOKEN", token);
   res.status(200).json({
-    Message: "User logged in successfully"
+    Message: "User logged in successfully",
+    isUserExist
   })
 
 }

@@ -18,11 +18,11 @@ const Register = () => {
   async function handleFormData(e){
     e.preventDefault();
     try{
-      await handleRegisterApi(username,email,password,role);
-      if(user.role === "student"){
+      const userVal = await handleRegisterApi(username,email,password,role);
+      if(userVal.user.role === "student"){
         navigate('/student');
       }
-      if(user.role === 'admin'){
+      if(userVal.user.role === 'admin'){
         navigate('/admin')
       }
     }catch(err){
