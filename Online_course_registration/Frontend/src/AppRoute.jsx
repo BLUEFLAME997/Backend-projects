@@ -6,6 +6,7 @@ import Restricted from './features/Auth/components/Restricted';
 import Dashboard from './features/Student/pages/Dashboard';
 import AdminDashboard from './features/admin/pages/AdminDashboard';
 import RoleProtectedRoute from './features/Auth/components/RoleProtectedRoute';
+import Navbar from './features/Student/components/Navbar';
 
 export const AppRoute = createBrowserRouter([
   {
@@ -31,8 +32,17 @@ export const AppRoute = createBrowserRouter([
           <AdminDashboard />
         </RoleProtectedRoute>
       </Protected>
-  }, {
+  },
+  {
     path: '/unauthorized',
     element: <Restricted />
+  },
+  {
+    path:'/courses',
+    element:<><Navbar></Navbar><h1>this is course route</h1></>
+  },
+  {
+    path:'enrolled-courses',
+    element:<h1>this is my courses section</h1>
   }
 ])
