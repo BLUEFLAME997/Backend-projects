@@ -25,4 +25,4 @@ materialRoute.get('/get-material/:materialId', identifyUser, materialController.
 */
 materialRoute.delete('/delete', identifyUser, checkCreator, materialController.deleteMaterialController);
 
-module.exports = materialController;
+module.exports = materialRoute;

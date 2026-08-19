@@ -35,7 +35,10 @@ async function uploadMaterialController(req, res) {
           err: 'Error:' + err.message
         })
       }
-      res.status(200).json({ message: 'Uploaded successfully', material });
+      res.status(200).json({
+        message: 'Uploaded successfully',
+        material
+      });
     }
   );
 
@@ -128,9 +131,9 @@ async function deleteMaterialController(req, res) {
   try {
     const deleteMaterial = await materialModel.findByIdAndDelete(materialId);
 
-    if(!deleteMaterial){
+    if (!deleteMaterial) {
       return res.status(404).json({
-        Message:"No material to delete"
+        Message: "No material to delete"
       })
     }
 
