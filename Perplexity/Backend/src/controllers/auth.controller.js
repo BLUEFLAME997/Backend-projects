@@ -32,4 +32,13 @@ export async function userRegisterController(req, res) {
         `
   })
 
+  res.status(201).json({
+    Message:"User registered successfully",
+    success:true,
+    user:{
+      id:user._id,
+      username:user.username,
+      email:user.email
+    }
+  })
 }
