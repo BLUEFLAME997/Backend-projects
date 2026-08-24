@@ -56,22 +56,28 @@ export async function userRegisterController(req, res) {
   })
 }
 
-export async function verifyEmail(req,res){
-  const token = req.query;
+export async function verifyEmail(req, res) {
+  const { token } = req.query;
 
-  const decoded = jwt.verify(token,process.env.JWT_SECRET);
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-  const isUserExist = await userModel.findOne({email:decoded.email});
-  if(!isUserExist){
+  const isUserExist = await userModel.findOne({ email: decoded.email });
+  if (!isUserExist) {
     return res.status(400).json({
-      Message:"Invalid token",
-      success:false,
-      err:"User not found"
+      Message: "Invalid token",
+      success: false,
+      err: "User not found"
     })
   }
 
   isUserExist.verified = true;
   await isUserExist.save();
 
-  res.sendHtml(``)
+  const html = `
+  <h1>Email verified successfully!</h1>
+  <p>Your email has beed verified. You can now log in to your account.</p>
+  <a href="http://localhost:3000/login">Go to login</a>
+  `
+
+  res.send(html);
 }
