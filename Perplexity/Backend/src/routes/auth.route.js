@@ -1,8 +1,9 @@
 import express from 'express';
 import { registerValidator, loginValidator } from '../validation/auth.validator.js';
-import { userRegisterController } from '../controllers/auth.controller.js';
+import { userRegisterController, getMeController } from '../controllers/auth.controller.js';
 import { verifyEmail } from '../controllers/auth.controller.js';
 import { userLoginController } from '../controllers/auth.controller.js';
+import { authUser } from '../middleware/auth.middleware.js';
 
 const authRouter = express.Router();
 
@@ -21,5 +22,10 @@ authRouter.get('/verify-email', verifyEmail);
 @description: To login a user and return jwt token
 */
 authRouter.post('/login', loginValidator, userLoginController);
+/* 
+@route: GET /api/auth/get-me
+@description: To get user details
+*/
+authRouter.get('/get-me', authUser, getMeController);
 
 export default authRouter;

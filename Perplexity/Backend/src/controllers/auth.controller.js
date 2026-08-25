@@ -4,7 +4,6 @@ dotenv.config();
 import userModel from "../model/user.model.js";
 import { sendEmail } from "../services/mail.service.js";
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
 
 export async function userRegisterController(req, res) {
   const { username, email, password } = req.body;
@@ -129,4 +128,8 @@ export async function userLoginController(req, res) {
     }
   })
 
+}
+
+export async function getMeController(req,res){
+  
 }
