@@ -113,7 +113,8 @@ export async function userLoginController(req, res) {
   }
 
   const token = jwt.sign({
-    email:user.email
+    email:user.email,
+    id:user._id
   },process.env.JWT_SECRET,{expiresIn:'2d'});
 
   res.cookie('Perplexity_Token',token);
@@ -131,5 +132,20 @@ export async function userLoginController(req, res) {
 }
 
 export async function getMeController(req,res){
+  const userId = req.user.id;
   
+  const user = await userModel.findById(userId).select('-password');
+  if(!user){
+    return res.status(404).json({
+      Message:"User not found",
+      success:false,
+      err:"User not found",
+    })
+  }
+
+  res.status(200).json({
+    Message:"User details fetched successfully",
+    success:true,
+    user
+  })
 }

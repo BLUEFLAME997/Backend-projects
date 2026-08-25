@@ -16,7 +16,7 @@ export function authUser(req,res,next){
   try{
     
     const decoded = jwt.verify(Perplexity_Token,process.env.JWT_SECRET);
-    res.user = decoded;
+    req.user = decoded;
     next();
 
   }catch(err){
