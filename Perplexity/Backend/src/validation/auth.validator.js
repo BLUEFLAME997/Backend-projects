@@ -29,3 +29,14 @@ export const registerValidator = [
   
       validator
 ]
+
+export const loginValidator = [
+  body('email')
+      .trim()
+      .notEmpty().withMessage("Email cannot be empty")
+      .isEmail().withMessage('email should be a valid email address'),
+  body('password')
+      .isLength({min:6,max:15}).withMessage('Password should be in between 6 - 15 characters'),
+
+      validator
+]

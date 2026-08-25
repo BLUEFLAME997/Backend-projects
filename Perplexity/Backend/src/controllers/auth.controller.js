@@ -4,6 +4,7 @@ dotenv.config();
 import userModel from "../model/user.model.js";
 import { sendEmail } from "../services/mail.service.js";
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
 export async function userRegisterController(req, res) {
   const { username, email, password } = req.body;
@@ -80,4 +81,52 @@ export async function verifyEmail(req, res) {
   `
 
   res.send(html);
+}
+
+export async function userLoginController(req, res) {
+  
+  const { email, password } = req.body;
+  
+  const user = await userModel.findOne({email});
+  if(!user){
+    return res.status(400).json({
+      Message:"Invalid email or password",
+      success:true,
+      err:"User not found"
+    })
+  }
+
+  const isPasswordMatched = await user.comparePassword(password);
+  if(!isPasswordMatched){
+    return res.status(400).json({
+      Message:"Invalid email or password",
+      success:false,
+      err:"Incorrect password"
+    })
+  }
+
+  if(!user.verified){
+    return res.status(400).json({
+      Message:"Please verify your email before logging in",
+      success:false,
+      err:"Email not verified"
+    })
+  }
+
+  const token = jwt.sign({
+    email:user.email
+  },process.env.JWT_SECRET,{expiresIn:'2d'});
+
+  res.cookie('Perplexity_Token',token);
+
+  res.status(200).json({
+    Message:"User logged in successfully",
+    success:true,
+    user:{
+      id:user._id,
+      username:user.username,
+      email:user.email
+    }
+  })
+
 }
