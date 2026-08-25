@@ -4,6 +4,7 @@ dotenv.config();
 import userModel from "../model/user.model.js";
 import { sendEmail } from "../services/mail.service.js";
 import jwt from 'jsonwebtoken';
+import redis from '../config/cache.js';
 
 export async function userRegisterController(req, res) {
   const { username, email, password } = req.body;
@@ -83,69 +84,91 @@ export async function verifyEmail(req, res) {
 }
 
 export async function userLoginController(req, res) {
-  
+
   const { email, password } = req.body;
-  
-  const user = await userModel.findOne({email});
-  if(!user){
+
+  const user = await userModel.findOne({ email });
+  if (!user) {
     return res.status(400).json({
-      Message:"Invalid email or password",
-      success:true,
-      err:"User not found"
+      Message: "Invalid email or password",
+      success: true,
+      err: "User not found"
     })
   }
 
   const isPasswordMatched = await user.comparePassword(password);
-  if(!isPasswordMatched){
+  if (!isPasswordMatched) {
     return res.status(400).json({
-      Message:"Invalid email or password",
-      success:false,
-      err:"Incorrect password"
+      Message: "Invalid email or password",
+      success: false,
+      err: "Incorrect password"
     })
   }
 
-  if(!user.verified){
+  if (!user.verified) {
     return res.status(400).json({
-      Message:"Please verify your email before logging in",
-      success:false,
-      err:"Email not verified"
+      Message: "Please verify your email before logging in",
+      success: false,
+      err: "Email not verified"
     })
   }
 
   const token = jwt.sign({
-    email:user.email,
-    id:user._id
-  },process.env.JWT_SECRET,{expiresIn:'2d'});
+    email: user.email,
+    id: user._id
+  }, process.env.JWT_SECRET, { expiresIn: '2d' });
 
-  res.cookie('Perplexity_Token',token);
+  res.cookie('Perplexity_Token', token);
 
   res.status(200).json({
-    Message:"User logged in successfully",
-    success:true,
-    user:{
-      id:user._id,
-      username:user.username,
-      email:user.email
+    Message: "User logged in successfully",
+    success: true,
+    user: {
+      id: user._id,
+      username: user.username,
+      email: user.email
     }
   })
 
 }
 
-export async function getMeController(req,res){
+export async function getMeController(req, res) {
   const userId = req.user.id;
-  
+
   const user = await userModel.findById(userId).select('-password');
-  if(!user){
+  if (!user) {
     return res.status(404).json({
-      Message:"User not found",
-      success:false,
-      err:"User not found",
+      Message: "User not found",
+      success: false,
+      err: "User not found",
     })
   }
 
   res.status(200).json({
-    Message:"User details fetched successfully",
-    success:true,
+    Message: "User details fetched successfully",
+    success: true,
     user
+  })
+}
+
+export async function userLogoutController(req, res) {
+  const { Perplexity_Token } = req.cookies;
+  if (!Perplexity_Token) {
+    return res.status(401).json({
+      Message: "Unauthorized",
+      success: false,
+      err: "Token not found"
+    })
+  }
+
+  const decoded = jwt.decode(Perplexity_Token);
+
+  const currentTimeStamp = Math.floor(Date.now() / 1000);
+  const remainingTime = decoded.exp - currentTimeStamp;
+
+  const redisResponse = await redis.set(Perplexity_Token, Date.now().toString(), 'EX', remainingTime);
+  res.clearCookie('Perplexity_Token');
+  res.status(200).json({
+    Message: "User logged out successfully"
   })
 }
