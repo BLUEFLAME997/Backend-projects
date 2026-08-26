@@ -1,6 +1,6 @@
 import express from 'express';
 import { registerValidator, loginValidator } from '../validation/auth.validator.js';
-import { userRegisterController, getMeController } from '../controllers/auth.controller.js';
+import { userRegisterController, getMeController, userLogoutController } from '../controllers/auth.controller.js';
 import { verifyEmail } from '../controllers/auth.controller.js';
 import { userLoginController } from '../controllers/auth.controller.js';
 import { authUser } from '../middleware/auth.middleware.js';
@@ -27,5 +27,10 @@ authRouter.post('/login', loginValidator, userLoginController);
 @description: To get user details
 */
 authRouter.get('/get-me', authUser, getMeController);
+/* 
+@route: GET /api/auth/logout
+@description: To logout user and blacklist token
+*/
+authRouter.get('/logout',authUser,userLogoutController);
 
 export default authRouter;
