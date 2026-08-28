@@ -7,3 +7,4 @@ const model = await initChatModel({
   apiKey:""
 });
 // ai implementation
+// google gemini
