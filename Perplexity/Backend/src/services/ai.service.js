@@ -1,11 +1,17 @@
-import { initChatModel } from "langchain";
+import dotenv from 'dotenv';
+dotenv.config();
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 
-process.env.GOOGLE_API_KEY = "your-api-key";
-
-const model = await initChatModel({
-  model:"google-genai:gemini-3.7-flash",
-  apiKey:""
+const model = new ChatGoogleGenerativeAI({
+  model: "gemini-3.6-flash",
+  apiKey: process.env.GEMINI_API_KEY
 });
-// ai implementation
-// google gemini
-// APi
+
+export async function testAi(){
+  model.invoke('what is capital of france').then((res)=>{
+    console.log('this is ai testing ')
+    console.log(res.text);
+  }).catch((err)=>{
+    console.log("Error: ",err)
+  })
+}
